@@ -16,7 +16,6 @@ const Body = () => {
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9974873&lng=80.2006371&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
     const json = await data.json();
-    console.log(json);
     setListOfRestaurants(
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
@@ -29,39 +28,38 @@ const Body = () => {
     <Shimmer />
   ) : (
     <div className="body">
-      <div className="search">
-        <input
-          type="text"
-          className="search-box"
-          value={searchText}
-          onChange={(e) => {
-            setSearchText(e.target.value);
-          }}
-        />
-        <button
-          onClick={() => {
-            //Filter logic
-            console.log(searchText);
-            const filteredRestaruant = listOfRestaurants.filter((res) =>
-              res.info.name.toLowerCase().includes(searchText.toLowerCase())
-            );
-            setFilteredRestaurant(filteredRestaruant);
-          }}
-        >
-          Search
-        </button>
-      </div>
       <div className="filter">
+        <div className="search">
+          <input
+            type="text"
+            className="search-box"
+            value={searchText}
+            onChange={(e) => {
+              setSearchText(e.target.value);
+            }}
+          />
+          <button
+            onClick={() => {
+              //Filter logic
+              const filteredRestaruant = listOfRestaurants.filter((res) =>
+                res.info.name.toLowerCase().includes(searchText.toLowerCase())
+              );
+              setFilteredRestaurant(filteredRestaruant);
+            }}
+          >
+            Search
+          </button>
+        </div>
         <button
           className="filter-btn"
           onClick={() => {
             const filteredList = listOfRestaurants.filter(
               (res) => res.info.avgRating > 4.5
             );
-            setListOfRestaurants(filteredList);
+            setFilteredRestaurant(filteredList);
           }}
         >
-          Ratiing 4.0+
+          Rating 4.5+
         </button>
       </div>
       <div className="search">
